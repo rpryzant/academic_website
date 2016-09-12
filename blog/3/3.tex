@@ -1,0 +1,78 @@
+\documentclass[a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{hyperref}
+\usepackage{ amssymb }
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{caption}
+
+\usepackage{amsmath,amsfonts,amssymb}
+
+
+
+
+\title{A History of Deep Learning}
+\author{Reid Pryzant}
+\date{November 15th, 2015}
+
+\begin{document}
+\maketitle
+\noindent The theory behind deep learning has roots as old as the 1970's and earlier \cite{mitchell}. From the earliest days of pattern recognition, one goal of machine learning researchers has been to automate the process of structuring data into features. The deep learning architectures that were designed for this task were artificial neural networks, and the method to train these networks was discovered independently by several groups during the 70's and 80's \cite{lecun15}. 
+\\ \\
+\noindent In 1980, Kunihiko Fukushima drew inspiration from the visual cortex of the human brain to invent a precursor of the Convolutional Neural Network. He used this network to recognize photos of simple objects like numbers \cite{fukushima}. In 1989, Yann LeCun used a deep feedforward neural network to read handwritten zip codes \cite{lecun89}. That same year, the ALVINN system used a three layer neural network to train computer-controlled vehicles to steer correctly for 90 miles on a public interstate highway \cite{pomerleau}. 
+\\ \\
+\noindent Despite this promising start, deep learning was ``largely forsaken by the machine-learning community and ignored by the computer-vision and speech-recognition communities" in the 90's and early 2000's \cite{lecun15}. There was one simple reason for this: neural networks were prohibitively slow to train. For example, it took three days to train the zip-code reading network of LeCun \cite{lecun89}.
+\\ \\
+\noindent Interest in deep learning was gradually revived in the $21^{\mathrm{st}}$ century. In 2007, Geoffrey Hinton and others at the Canadian Institute for Advanced Research (CIFAR) developed a method to pre-train networks \cite{hinton07}. This pre-training technique took advantage of the advent of fast, conveniently programmable graphics processing units (GPUs) and allowed researchers to train networks 10 to 20 times faster than before \cite{raina09}. This speedup meant that models could be taught how to do things in hours or days instead of weeks or months. 
+\\ \\
+\noindent The academic and industrial machine learning community soon took notice. They used a variety of architectures to produce record-breaking results in many artificial intelligence tasks. In 2009, deep neural networks produced record results in speech recognition and vocabulary recognition \cite{dahl}. By 2012, this architecture was being deployed in many Android phones \cite{lecun15}. During ImageNet 2012, an annual AI competition in which teams compete to produce the best image recognizer, a deep convolutional network produced spectacular results, nearly halving the error rates of their closest competitors \cite{krizhevsky}. Since then, deep learning has entered a renaissance as industry and research leaders have increasingly adopted deep learning techniques with impressive results  \cite{ibm}.
+
+
+
+\begin{thebibliography}{50}
+
+
+\bibitem{mitchell}
+Mitchell, Tom M. $Machine\ Learning.$ New York: McGraw-Hill, 1997. Print.
+
+\bibitem{fukushima}
+Fukushima, Kunihiko. ``Neocognitron: A Self-Organizing Neural Network Model For A Mechanism Of Pattern Recognition Unaffected By Shift In Position". $Biol.\ Cybernetics$ 36.4 (1980): 193-202. Web.
+
+\bibitem{lecun89}
+LeCun, Y. et al. ``Backpropagation Applied To Handwritten Zip Code Recognition". $Neural\ Computation$ 1.4 (1989): 541-551. Web.
+
+\bibitem{pomerleau}
+Pomerleau, Dean. ``ALVINN, An Autonomous Land Vehicle In A Neural Network". $Carnegie-Mellon\ University\ Artificial\ Intelligence\ And\ Psychology\ Project$ (1989): n. pag. Print.
+
+\bibitem{lecun15}
+LeCun, Yann, Yoshua Bengio, and Geoffrey Hinton. ``Deep Learning". $Nature$ 521.7553 (2015): 436-444. Web.
+
+
+\bibitem{hinton07}
+Hinton, Geoffrey. ``Learning Multiple Layers Of Representation". $Trends\ in\ Cognitive\ Sciences$ 11.10 (2007): n. pag. Print.
+
+\bibitem{raina09}
+Raina, Rajat, Anand Madhavan, and Andrew Ng. ``Large-Scale Deep Unsupervised Learning Using Graphics Processors". $Proceedings\ of\ the\ 26th\ International\ Conference\ on\ Machine\ Learning$ (2009): n. pag. Print.
+
+
+\bibitem{ibm}
+ibm.com,. ``IBM Launches Industry’s First Cognitive Consulting Practice". N.p., 2015. Web. 15 Dec. 2015.
+
+\bibitem{dahl}
+Dahl, George, and Dong Yu. ``Context-Dependent Pre-Trained Deep Neural Networks For Large-Vocabulary Speech Recognition". $IEEE\ Transactions\ on\ Audio,\ Speech,\ and\ Language\ Proccessing$ 20.1 (2011): n. pag. Print.
+
+\bibitem{krizhevsky}
+Krizhevsky, Alex, Ilya Sutskever, and Geoffrey Hinton. ``ImageNet Classification With Deep Convolutional Neural Networks". $Advances\ in\ neural\ information\ processing\ systems\ (NIPS)$ (2012): n. pag. Print.
+
+\end{thebibliography}
+
+\end{document}
