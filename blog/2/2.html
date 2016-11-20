@@ -32,7 +32,7 @@
 
 
 <h2>Proximal Gradient Descent</h2>
-<h3 style="text-align:center"> 2015</h3>
+<h3 style="text-align:center"> 2016</h3>
 
 <h4>What is this this thing??</h4>
 
@@ -58,7 +58,7 @@ First, let's visualize what the gradient of a convex, differentiable function lo
 Let's go on to convex non-differentiable functions. These are like smiley mouths with at least one kink, and they have sub-gradients instead of gradients. Sub-gradients are sets of vectors. Each vector in this set is kind of like a gradient. They touch at only one point and the entire function is held above them. This means that the only element in the sub-gradient IS the gradient at all the smooth, curvey parts of our function. At the kinks, though, the sub-gradient is the set of all lines which are below the function.
 </br></br>
 
-<img class="" src="../img/1.1.graph.png" alt="graph" class="blogimg">
+<img class="" src="../../img/1.1.graph.png" alt="graph" class="blogimg">
 
 
 </br></br></li>
@@ -68,7 +68,7 @@ Let's go on to convex non-differentiable functions. These are like smiley mouths
 The proximal operator takes a point in a space (x) and returns another point (x'). It is parameterized by a function (f) and a scalar (g).
 x' is chosen because it both minimizes f and is close to x (in the L2 sense). The tradeoff between minimizing f and staying close to x is determined by g.
 </br></br>
-<img style="text-align:center;" src="../img/1.2.equation.png" alt="equation" class="blogimg">
+<img style="text-align:center;" src="../../img/1.2.equation.png" alt="equation" class="blogimg">
 Formula for proximal operator courtisy of Wikipedia. Yeah yeah the notation is not what I used but I know you love formulas to take it or leave it.
 </br></br>
 </li>
