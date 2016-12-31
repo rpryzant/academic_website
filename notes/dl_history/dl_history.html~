@@ -1,0 +1,143 @@
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="https://use.fontawesome.com/981e0eb420.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900%7COpen+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../static/style.css" />
+
+
+
+
+<script type="text/javascript"
+   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default">
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
+
+</head>
+<body>
+
+    <div class="blog-container">
+        <div class="row">
+            <div class="col-sm-12">
+
+
+<h2>A Quick Tour of Deep Learning History</h2>
+
+
+I read a bunch of papers and articles, and then wrote these cliffs notes so that 
+you don't have too.
+
+
+
+
+I'll start off with some pictures:
+</br>
+<img src="google_trends.png" alt="Mountain View" style="width:500px;">
+</br>
+Google trends results for "deep learning".
+</br>
+<img src="speech_recognition.png" alt="Mountain View" style="width:500px;">
+</br>
+State-of-the-art in speech recogition. Take a look at that precipitous drop
+after a decade of stagnation.
+</br>
+<img src="imagenet.png" alt="Mountain View" style="width:500px;">
+</br>
+State-of-the-art in image recognition. See how the circled bar cut error
+almost in half?
+</br></br>
+All this is deep learning. Lots of it is hype but lots of it is also very cool.
+</br></br>
+The theory behind deep learning has roots as old as the 1970’s and earlier [1].
+From the earliest days of pattern recognition, one goal of machine learning researchers
+has been to automate the process of structuring data into features. The deep 
+learning architectures that were designed for this task were artificial neural nets, 
+and the method to train these networks was discovered independently by several groups 
+during the 70’s and 80’s [5].
+</br></br>
+In 1980, Kunihiko Fukushima drew inspiration from the visual cortex of the
+human brain to invent a precursor of the Convolutional Neural Network. He
+used this network to recognize photos of simple objects like numbers [2]. In
+1989, Yann LeCun used a deep feedforward neural network to read handwritten
+zip codes [3]. That same year, the ALVINN system used a three layer neural
+network to train computer-controlled vehicles to steer correctly for 90 miles on
+a public interstate highway [4].
+</br></br>
+Despite this promising start, deep learning was “largely forsaken by the machine
+learning community and ignored by the computer-vision and speech-recognition
+communities' in the 90’s and early 2000’s [5]. There was one simple reason for
+this: neural networks were prohibitively slow to train. For example, it took
+three days to train the zip-code reading network of LeCun [3].
+</br></br>
+Interest in deep learning was gradually revived in the 21st century. In 2007,
+Geoffrey Hinton and others at the Canadian Institute for Advanced Research
+(CIFAR) developed a method to pre-train networks [6]. This pre-training technique
+took advantage of the advent of fast, conveniently programmable graphics
+processing units (GPUs) and allowed researchers to train networks 10 to 20 times
+faster than before [7]. This speedup meant that models could be taught how to
+do things in hours or days instead of weeks or months.
+</br></br>
+The academic and industrial machine learning community soon took notice.
+They used a variety of architectures to produce record-breaking results in many
+artificial intelligence tasks. In 2009, deep neural networks produced record results
+in speech recognition and vocabulary recognition [9]. By 2012, this architecture
+was being deployed in many Android phones [5]. During ImageNet 2012,
+an annual AI competition in which teams compete to produce the best image
+recognizer, a deep convolutional network called AlexNet produced spectacular results, 
+nearly halving the error rates of their closest competitors [10]. Since then, 
+deep learning has entered a renaissance as industry and research leaders have 
+increasingly adopted deep learning techniques with impressive results [8].
+
+<h4>Reading List</h4>
+<ol>
+<li> Mitchell, Tom M. M achine Learning. New York: McGraw-Hill, 1997.
+    Print.
+
+<li> Fukushima, Kunihiko. “Neocognitron: A Self-Organizing Neural Network
+    Model For A Mechanism Of Pattern Recognition Unaffected By Shift In
+    Position”. Biol. Cybernetics 36.4 (1980): 193-202. Web.
+
+<li> LeCun, Y. et al. “Backpropagation Applied To Handwritten Zip Code
+    Recognition”. Neural Computation 1.4 (1989): 541-551. Web.
+
+<li> Pomerleau, Dean. “ALVINN, An Autonomous Land Vehicle In A Neural 
+    Network”. Carnegie − Mellon University Artificial Intelligence And 
+    Psychology Project (1989): n. pag. Print.
+
+<li> LeCun, Yann, Yoshua Bengio, and Geoffrey Hinton. “Deep Learning”.
+    Nature 521.7553 (2015): 436-444. Web.
+
+<li> Hinton, Geoffrey. “Learning Multiple Layers Of Representation”.
+    Trends in Cognitive Sciences 11.10 (2007): n. pag. Print.
+
+<li> Raina, Rajat, Anand Madhavan, and Andrew Ng. “Large Scale Deep 
+    Unsupervised Learning Using Graphics Processors”. Proceedings 
+    of the 26th International Conference on M achine Learning (2009): 
+    n. pag. Print.
+
+<li> ibm.com,. “IBM Launches Industry’s First Cognitive Consulting Practice”.
+    N.p., 2015. Web. 15 Dec. 2015.
+
+<li> Dahl, George, and Dong Yu. “Context-Dependent Pre-Trained Deep Neural 
+    Networks For Large-Vocabulary Speech Recognition”. IEEE Transactions 
+    on Audio, Speech, and Language Proccessing 20.1(2011): n. pag. Print.
+
+</li> Krizhevsky, Alex, Ilya Sutskever, and Geoffrey Hinton. “ImageNet 
+     Classification With Deep Convolutional Neural Networks”. Advances in 
+     neural information processing systems (NIP S) (2012): n. pag. Print
+</ul>
+
+
+
+</body>
+</br> </br></br> </br>
+</html>

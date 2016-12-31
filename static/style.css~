@@ -1,0 +1,101 @@
+body { 
+    font-family: "Open Sans"; 
+}
+h1 { 
+    font-family: Lato;
+    font-weight: 550;
+    position: relative;
+    text-align: center;
+}
+h1 small {
+    font-size: 14px;
+    float: right;
+    padding-top: 15px;
+    line-height: 1.8em; 
+}
+h2 {
+   padding-top: 50px;
+   padding-bottom: 25px;
+   text-align: center;
+}
+
+h3 {
+    color: #999;
+    font-size: 18px;
+    font-family: Lato;
+    font-weight: 300;
+    margin-top: 10px; 
+}
+h3 small {
+    font-weight: 400; 
+}
+h4 {
+    margin-top: 0;
+    padding-top: 10px;
+    font-family: Lato;
+    font-weight: 400;
+    font-size: 22px;
+}
+h4 small {
+    padding-top: 10px;
+    font-family: Lato;
+    font-weight: 300; 
+    padding-left: 10px;
+
+}
+span.sep {
+    color: #ddd;
+    padding: 0 3px; 
+}
+.container {
+    max-width: 970px; 
+}
+.blog-container {
+   width: 650px; 
+   margin: 0 auto;
+   font-size: 18px;
+   text-align: justify;
+   font-weight: 75;
+   display: block;
+}
+
+
+
+ul { 
+    padding-left: 25px; 
+}
+b { 
+    font-weight: 600; 
+}
+.footer { 
+    text-align: center; 
+    margin: 40px 0 100px 0; 
+}
+.footer a { 
+    color: #999; 
+    font-family: Lato; 
+    font-weight: 300; 
+    font-size: 12px; 
+}
+@media (min-width: 768px) { 
+    .container { 
+        margin-top: 50px; 
+    } 
+}
+
+p {
+  font-size: 14px;
+}
+img.headshot {
+    width:150px;max-width:100%;float:left
+}
+
+img.seal {
+    width:90px;max-width:100%;float:left
+}
+
+
+img.blogimg {
+    width: 100%;
+}
+

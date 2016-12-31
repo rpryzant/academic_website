@@ -14,17 +14,15 @@ h1 small {
     line-height: 1.8em; 
 }
 h2 {
+   font-size: 36px;
    padding-top: 50px;
    padding-bottom: 25px;
    text-align: center;
+   font-weight: bold;
 }
 
 h3 {
-    color: #999;
-    font-size: 18px;
-    font-family: Lato;
-    font-weight: 300;
-    margin-top: 10px; 
+    font-weight: bold;
 }
 h3 small {
     font-weight: 400; 
@@ -35,6 +33,7 @@ h4 {
     font-family: Lato;
     font-weight: 400;
     font-size: 22px;
+    font-weight: bold;
 }
 h4 small {
     padding-top: 10px;
@@ -43,6 +42,14 @@ h4 small {
     padding-left: 10px;
 
 }
+h5 {
+    font-size: 24px;
+
+    font-family: Lato;
+    font-weight: 300;
+}
+
+
 span.sep {
     color: #ddd;
     padding: 0 3px; 
@@ -51,7 +58,8 @@ span.sep {
     max-width: 970px; 
 }
 .blog-container {
-   width: 650px; 
+   font-family: "monosans";
+   width: 750px; 
    margin: 0 auto;
    font-size: 18px;
    text-align: justify;
@@ -59,7 +67,10 @@ span.sep {
    display: block;
 }
 
-
+img {
+    display: block;
+    margin: auto;
+}
 
 ul { 
     padding-left: 25px; 
@@ -84,7 +95,7 @@ b {
 }
 
 p {
-  font-size: 14px;
+
 }
 img.headshot {
     width:150px;max-width:100%;float:left
