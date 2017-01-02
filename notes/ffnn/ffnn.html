@@ -161,6 +161,112 @@ w^{new}_{ij} &= w^{old}_{ij} - n \frac{\partial E_d}{\partial w_{ij}}\\
 
 
 </br></br>
+
+Let's try implementing this real quick. Below I've coded up a quick neural network implementation. This network takes 3-dimensional inputs and produces a single real-valued output. It has one hidden layer with 8 units. The loss function I'm using here is absolute loss, $y - \hat{y}$. 
+
+<pre>
+"""
+These are some quick implementations of neural networks for regression.
+
+Training is via backprop
+
+No bias because meh
+"""
+import numpy as np
+import math
+
+class ffnn(object):
+    def __init__(self, learning_rate, input_dim):
+        self.input_dim = input_dim
+        self.learning_rate = learning_rate
+        
+        # xavier initialization for layer 1 (input x 8)
+        self.W1 = np.random.randn(self.input_dim, 8) / np.sqrt(self.input_dim)
+
+        # xavier for layer 2 (8 x 1)
+        self.W2 = np.random.randn(8, 1) / np.sqrt(8)
+
+    # activation function
+    def sigmoid(self, x):
+        return 1.0 / (1 + np.exp(-x))
+
+    # derivative of activation function
+    def sigmoid_derivative(self, x):
+        return x * (1 - x)
+
+    # absolute loss
+    def loss(self, y_hat, y):
+       return y - y_hat
+
+    # forward pass:
+    #    y = W^T X
+    def forward_pass(self, X):
+        h = self.sigmoid(np.dot(X, self.W1))
+        y_hat = self.sigmoid(np.dot(h, self.W2))
+        return h, y_hat
+
+    # backprop:
+    #    dE/dW  =  dE/dO * dO/dSigmoid * dSigmoid/dW1  (via chain rule)
+    #           =  loss * sigmoid derivative
+    def backward_pass(self, loss, h, y_hat, X):
+        dW2 =  loss * self.sigmoid_derivative(y_hat)
+        dh = np.dot(dW2, self.W2.T)
+        dW1 = dh * self.sigmoid_derivative(h)
+        return dW1, dW2
+
+    # training step: forward and backward pass
+    def train_step(self, X, Y):
+        h, y_hat = self.forward_pass(X)
+        loss = self.loss(y_hat, Y)
+        dW1, dW2 = self.backward_pass(loss, h, y_hat, X)
+
+        self.W2 += self.learning_rate * np.dot(h.T, dW2)
+        self.W1 += self.learning_rate * np.dot(X.T, dW1)
+
+        return loss
+                                               
+</pre>
+
+That wasn't too bad. To test it out, I made a single batch of data consisting of 4 examples. The regression targets, $y$, are either 0 or 1.
+
+<pre>
+# some test data of dim 3
+X = np.array([[0,0,1],
+              [0,1,1],
+              [1,0,1],
+              [1,1,1]])
+
+y = np.array([[0],
+              [1],
+              [1],
+              [0]])
+
+nn = ffnn(0.9, 3)
+
+for i in range(100000):
+    l = nn.train_step(X, y)
+    if i % 10000 == 0:
+        print str(np.mean(np.abs(l)))
+</pre>
+
+And if we print out the losses...
+
+<pre>
+0.499779030427
+0.0111148085597
+0.00758170483268
+0.00608432981921
+0.00521118787091
+0.00462379950633
+0.00419471635656
+0.00386394239286
+0.00359907981644
+0.0033809122353
+</pre>
+
+Looks like it's working. Pretty cool. There's one thing that concerns me. In the beginning of training, my average per-batch loss is 0.5. Since the targets $y$ are split evenly between 0 and 1, this implies that my predictions are centered around 0.5. I printed out the predictions and verified this. I think the reason for this is that on average, about half of the input features are "active" at a time. If you look at the batch I prepared, you'll notice that the inputs are often zero, which would zero out the corresponding contribution of half of the weights. Hence the average predicted value of 0.5.
+
+</br></br>
 <h4>References:</h4>
 <ol>
 <li> Goodfellow, Ian, Aaron Courtville, and Yoshua Bengio. Deep Learning. 
