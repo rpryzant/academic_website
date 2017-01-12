@@ -1,0 +1,112 @@
+<html>
+<head>
+<title>Gaussian Processes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="https://use.fontawesome.com/981e0eb420.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900%7COpen+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../static/style.css" />
+
+
+
+
+<script type="text/javascript"
+   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default">
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
+
+</head>
+<body>
+
+    <div class="blog-container">
+        <div class="row">
+            <div class="col-sm-12">
+
+
+<h2>Gaussian Process Regression</h2>
+
+
+
+<h4>Intro</h4>
+
+I've spent a lot of time recently reading (and using) gaussian processes ($GP$). I think they're really cool, and wanted to take the time to write up a short, easily accessible tutorial on them. This should serve as a valuable exercise in information distillation for me. I also hope that prospective readers will learn to find these ideas as fun, beautiful, and intuitive as I do.  
+
+</br></br>
+
+I'm going to start by telling you what a $GP$ looks like with broad scketches. I'm then going to go back and explain things from the beginning. What's a multivariate Gaussian? Bayesian regression? Once we have these two pieces sketched out and colored to some degree of detail, I'm going to go back over $GP$ and how to use it for regression. I'll also layer on a little more information so you understand it a little more deeply. Hopefully some of this'll make sense and you'll have learned something. So let's get to it!
+
+</br></br></br>
+
+<h4>Gaussian Processes</h4>
+
+A $Gaussian\ Process$ is an extension of the multivariate gaussian to infinite dimensions. This means that you can give it a vector ${\bf x} \in \mathbb{R}^n$ (for any $n$) and the process will spit back a new vector ${\bf y} \in \mathbb{R}^n$. Every component of ${\bf y}$ represents the probability of observing $x_i$ according to some gaussian living in dimension $i$. 
+
+</br></br>
+
+Since $GP$'s act like probability distributions, you can do more than just ask "what's the probability of this ${\bf x}$ I have here?" You can sample the $GP$ to draw brand new vectors from the "distribution". What's the dimensionality of these samples? Whatever you want. So if we take an $infinite$-dimensional sample from the $GP$, we're effectively drawing an entire functions from a gaussian-like distribution! If you don't see this, note that every possible $d \in \mathbb{R}$ can be deterministically mapped to some element of the infinite-dimensional vector we just drew. Boom. That's a function.
+
+</br></br>
+
+This is why some people like to think of $GP$'s as not just a distribution over random vectors but also over random $functions$. To avoid confusion, though, I should be clear about what a random function is. A random function is NOT a function whose outputs are stochastic in any way. A random function is one that's chosen from a set of functions probabalistically. Once selected, this function has deterministic outputs for each input. 
+
+</br></br>
+
+To get some intuition for all of this, let's look at a $GP$:
+</br></br>
+<img src="1.png" alt="Mountain View" style="width:600;">
+
+</br></br>
+The data are one-dimensional, and we want to predict the value of $y$. On the left we see the distribution of functions that the $GP$ thinks might explain these data. All the shaded bits correspond to the 95% CI of the distribution, and the dotted line is the mean of the process. The lines we sample from this $GP$ are most likely to live in that shaded area. On The right I've drawn two functions that were sample from the distribution on the left. 
+
+</br></br>
+
+The last thing I'll say about $GP$'s during this prelude is that they have some nice properties which allow them to be fit into a Bayesian regression framework quite easily. I.e. we can use a $GP$ to come up with predictions for some unknown test points, based on a bunch of known training points. More on this later.
+
+
+</br></br></br>
+<h4>Multivariate Gaussians</h4>
+
+TODO PICTURES!!!!
+
+
+A random variable ${\bf x} \in \mathbb{R}^n$ follows a multivariate normal distribution with mean ${\bf \mu} \in \mathbb{R}^n$ and covariance $\Sigma$ if,
+
+$$ p({\bf x}; {\bf \mu}, \Sigma) = \frac{1}{(2\pi)^{n/2}\vert\Sigma\vert^{1/2}} exp \left(-\frac{({\bf x} - {\bf \mu})^{T} \Sigma^{-1} ({\bf x} - {\bf \mu}) }{2}  \right) $$
+
+We also say ${\bf x} \sim N(\mu, \Sigma)$. It's a pretty straightforward generalization of the traditional gaussian I'm sure you're familiar with. A few properties to note, though:
+
+<ul>
+<li> The marginal densities of the multivariate are gaussian as well. For example, since ${\bf x} \sim N(\mu, \Sigma)$, then $x_1 \sim N(\mu_1, \Sigma_{11})$.
+<li> $\Sigma$ describes the covarience between each pair of features. So it's symmetric, and all it's values are positive (symmetric positive definite).
+<li> The conditional densities are gaussian.
+<li> Sum of gaussians is gaussian.
+</ul>
+
+
+</br></br></br>
+
+<h4>Bayesian Regression</h4>
+
+
+</br></br></br>
+
+<h4>Reading List:</h4>
+<ol>
+<li> <a href="http://cs229.stanford.edu/section/cs229-gaussian_processes.pdf">http://cs229.stanford.edu/section/cs229-gaussian_processes.pdf</a> 
+<li> <a href="http://videolectures.net/gpip06_mackay_gpb/">http://videolectures.net/gpip06_mackay_gpb/</a>
+<li> <a href="https://arxiv.org/pdf/1505.02965v2.pdf">https://arxiv.org/pdf/1505.02965v2.pdf</a>
+<li> <a href="http://www.gaussianprocess.org/gpml/chapters/RW2.pdf">http://www.gaussianprocess.org/gpml/chapters/RW2.pdf</a>
+</ol>
+</br></br></br></br>
+
+
+</body>
+</html>
+
