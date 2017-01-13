@@ -30,7 +30,7 @@
             <div class="col-sm-12">
 
 
-<h2>Gaussian Process Regression</h2>
+<h2>Gaussian Processes</h2>
 
 
 
@@ -158,7 +158,37 @@ Intuitively, using this kernel means that the closer $x$ and $y$ are, the more c
 </br></br></br>
 <h4>Gaussian Processes for Regression</h4>
 
+We can leverage some of the properties of the $GP$ within the framework of Baysian regression. If $D = (X, Y)$ is a training set of examples and ground truth values, then in the gaussian processes regression model,
 
+$$ y_i = f(x_i) + \epsilon_i  $$
+
+where each $\epsilon_i \sim N(0, \sigma^2)$, and we assume a 0-mean $GP$ as a prior distribution over $f(\cdot)$'s:
+
+$$ f(\cdot) \sim GP(0, k(\cdot, \cdot))  $$
+
+Now, say we have a test set $T = (X^*, Y^*)$  for whom we want to make predictions. If we wanted to use Bayesian linear regression, we'd use Bayes rule to get the probability of some parameters given the data, take some parameters, and use these to generate a distribution over predictions. For Gaussian process regression, things are actually much simpler!
+
+</br></br>
+
+I'm going to sketch out the derivation. Note, though, that my notation is going to be pretty loose. Hopefully that'll make things easier and faster to understand. We start by jamming together the training and test data into a single vector:
+
+\begin{align}
+\begin{bmatrix} Y \\ Y^* \end{bmatrix} = \begin{bmatrix}f(X) \\ f(X^*)\end{bmatrix} + \begin{bmatrix}\epsilon \\ \epsilon^*\end{bmatrix} &\sim N\left(0,\ \begin{bmatrix} k(X, X) & k(X, X^*) \\ k(X^*, X) & k(X^*, X^*) \end{bmatrix}   \right) + N\left(0,\ \begin{bmatrix}\sigma^2\ I & 0 \\0 & \sigma^2\ I  \end{bmatrix}\right) \\
+ &= N\left(0,\    \begin{bmatrix} k(X, X) + \sigma^2\ I & k(X, X^*) \\ k(X^*, X) & k(X^*, X^*) + \sigma^2\ I \end{bmatrix} \right)
+\end{align}
+
+Now all we need to do is plug in some rules for conditioning Gaussians, and condition $Y^*$ on everything else:
+
+$$ P(Y^* \vert Y, X, X^*) \sim N({\bf \mu}, {\bf \Sigma})  $$
+
+where
+
+\begin{align*}
+{\bf \mu} &= k(X^*)(k(X, X) + \sigma^2\ I)^{-1} Y \\
+{\bf \Sigma} &= k(X^*, X^*) + \sigma\ I - k(X^*, X)(k(X, X) + \sigma^2\ I)^{-1} k(X, X^*)
+\end{align*}
+
+Big scary equations, yeah, but it's also a closed-form equation that describes exactly the posterior predictive probability distribution. That's seriously it! It's all done. We have a probability distribution over our predictions. Easy, huh? And <b><u><i>COOL</b></u></i> too!!
 
 </br></br></br>
 
