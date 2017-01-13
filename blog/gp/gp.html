@@ -73,17 +73,19 @@ The last thing I'll say about $GP$'s during this prelude is that they have some 
 </br></br></br>
 <h4>Multivariate Gaussians</h4>
 
-TODO PICTURES!!!!
+The picture below shows a multivariate gaussian in two dimensions.
+</br></br>
+<img src="2.png" alt="Mountain View" style="width:600;">
 
 
-A random variable ${\bf x} \in \mathbb{R}^n$ follows a multivariate normal distribution with mean ${\bf \mu} \in \mathbb{R}^n$ and covariance $\Sigma$ if,
+A random variable ${\bf x} \in \mathbb{R}^n$ follows a multivariate gaussian distribution in $n$ dimensions with mean ${\bf \mu} \in \mathbb{R}^n$ and covariance $\Sigma$ if,
 
 $$ p({\bf x}; {\bf \mu}, \Sigma) = \frac{1}{(2\pi)^{n/2}\vert\Sigma\vert^{1/2}} exp \left(-\frac{({\bf x} - {\bf \mu})^{T} \Sigma^{-1} ({\bf x} - {\bf \mu}) }{2}  \right) $$
 
 We also say ${\bf x} \sim N(\mu, \Sigma)$. It's a pretty straightforward generalization of the traditional gaussian I'm sure you're familiar with. A few properties to note, though:
 
 <ul>
-<li> The marginal densities of the multivariate are gaussian as well. For example, since ${\bf x} \sim N(\mu, \Sigma)$, then $x_1 \sim N(\mu_1, \Sigma_{11})$.
+<li> The marginal densities of the multivariate are gaussian as well. For example, since ${\bf x} \sim N(\mu, \Sigma)$, then $x_1 \sim N(\mu_1, \Sigma_{11})$. You can see this visually in the above piture. Notice how the lower bit, the data are still normally distributed when flattened against each axis.
 <li> $\Sigma$ describes the covarience between each pair of features. So it's symmetric, and all it's values are positive (symmetric positive definite).
 <li> The conditional densities are gaussian.
 <li> Sum of gaussians is gaussian.
@@ -93,6 +95,46 @@ We also say ${\bf x} \sim N(\mu, \Sigma)$. It's a pretty straightforward general
 </br></br></br>
 
 <h4>Bayesian Regression</h4>
+
+In regression problems, we have a dataset ${\bf D} = (X,  Y)$, where
+\begin{align}
+ X &= \begin{bmatrix} {\bf x}_1 & {\bf x}_2 &\cdot\cdot\cdot& {\bf x}_m \end{bmatrix} \\
+ Y &= \begin{bmatrix}  y_1 &  y_2 &\cdot\cdot\cdot& y_m \end{bmatrix} 
+\end{align}
+
+The point of most learning algorithms is to come up with some ${\bf w}$ such that each ${\bf w}^T {\bf x}_i$ is reasonably close to $y_i$. Of course we're not going to hit the $y_i$'s right on the dot, though. It's pretty standard in statistics to say that the "noise" in our predictions are normally distributed, and that
+
+$$ y_i = {\bf w}^T {\bf x} + \epsilon_i $$
+
+Where all the $\epsilon_i$'s are i.i.d. under $N(0, \sigma^2)$. This is a nice way of thinking about things because it lets us model the conditional probability of $y_i$. $\epsilon_i$, the error, is equal to $y_i - {\bf w}^T {\bf x}_i$. So this difference term also follows $N(0, \sigma^2)$ and we know $P( Y \vert X, {\bf w})$, the probability of getting any $y_i$, provided we already have ${\bf w}$ and ${\bf x}_i$!
+
+
+</br></br>
+
+We know the conditional probability of the data given our paramters. We want to flip that around to get the probability of our parameters given the data, because the most probable parameters, then, would be the best-fitting ones. To do this with Bayes rule, we need some kind of prior over ${\bf w}$. We often use ${\bf w} \sim N(0, \tau^2 I)$ which encourages parameters to stay near zero. Now, using Bayes rule, we can get the parameter posterier distribution:
+
+$$ p({\bf w},  X \vert  Y) = \frac{ p({\bf w}) p( Y \vert  X, {\bf w}) }{\int_{{\bf w}'} p({\bf w}') p( Y \vert  X, {\bf w}') d{\bf w}}  $$
+
+The really cool thing about Baysian regressian is what happens at test time. On each test point ${\bf x}_*$, the model gives back an entire probability distribution over possible outputs instead of a single guess. This is called the <i>predictive posterior distribution</i> and it looks like this:
+
+$$ p(y_* \vert {\bf x}_*, {\bf D}) = \int_{\bf w} p(y_* \vert {\bf x_*}, {\bf w}) p({\bf w},  X \vert  Y) d{\bf w} $$
+
+Now the REALLY cool thing about Baysian regression is that all the integrals you saw are actually tractable! This means there's a closed form solution for both the probability of the weights AND the posterior predictive distribution!!!! I'm going to spare you the math, but here's the distributions:
+
+\begin{align}
+p({\bf w},  X \vert Y) &\sim N \left( \frac{  A^{-1} X^T Y }{ \sigma^2}, A^{-1}  \right) \\
+p(y_* \vert {\bf x}_*, {\bf D}) &\sim N\left(\frac{ {\bf x}^T_* A^{-1} X^{T} Y  }{\sigma^2  }, {\bf x}_*^T A^{-1} {\bf x}_* + \sigma^2  \right)
+\end{align}
+
+Where $A =  (1/\sigma^2)X^TX + (1/\tau^2)I$. These terms look pretty messy and they are, but I think one thing worth noticing is the presence of both $\tau$ and $\sigma$ in the variation both distributions. This reflects the fact that the uncertainty of our predictions comes from both noise in the data (the $\epsilon$'s) and uncertainty in our choice of parameters. This should make you feel better than regular linear regression, which has no way to model uncertainty in the parameters. 
+
+</br></br>
+
+If you look at a Bayesian regression, you can see this additional modeling at play: the posterier predictive distribution tightens up when it encounters densely distributed data.
+
+TODO PICTURE 
+
+
 
 
 </br></br></br>
