@@ -130,7 +130,7 @@ Where $A =  (1/\sigma^2)X^TX + (1/\tau^2)I$. These terms look pretty messy and t
 
 </br></br>
 
-If you look at a Bayesian regression, you can see this additional modeling at play: the posterier predictive distribution (95% confidence interval is shaded and the maximum likelihood estimate is dotted) tightens up when it encounters densely distributed data.
+If you look at a Bayesian regression, you can see this additional modeling at play: the posterier predictive distribution (95% confidence interval is shaded, MLE estimate is dotted) tightens up when it encounters densely distributed data.
 
 </br></br>
 <img src="3.png" alt="Mountain View" style="width:250;">
@@ -138,6 +138,25 @@ If you look at a Bayesian regression, you can see this additional modeling at pl
 
 </br></br></br>
 <h4>Gaussian Processes</h4>
+
+We've already developed some intuition for the $GP$. If you recall, they're like multivariate Gaussians except you can ask for the probability of ${\bf x} \in \mathbb{R}^n$ for <b><u>any</u></b> $n$. Furthermore, we can interpret $GP$'s as distributions over functions if we choose $n$ to be $\infty$.  $GP$'s do this by making use of a <b>mean function</b> $m(\cdot)$ and <b>covarience kernel</b> $k(\cdot, \cdot)$. Given any set of elements $x_1, ..., x_n \in \mathbb{R}$, the returned set of random variables $GP(x_1), ..., GP(x_n)$ are distributed as,
+
+$$\begin{bmatrix} GP(x_1) \\ \vdots \\ GP(x_n)\end{bmatrix}  \sim N\left(\ \begin{bmatrix} m(x_1)\\ \vdots \\ m(x_n)  \end{bmatrix}\ ,\ \begin{bmatrix}k(x_1, x_1)& \cdots & k(x_1, x_m)\\ \vdots & \cdots & \vdots \\ k(x_m, x_1) & \cdots & k(x_m, x_m)   \end{bmatrix}      \ \right)   $$
+
+There are no constraints on $m(\cdot)$, but in order to be valid, $k(\cdot, \cdot)$ must be positive and communitive (recall the very similar constraint placed on the covarience matrix of a multivariate gaussian). 
+
+</br></br>
+
+A popular choice for the covarience kernel is the <b>squared exponential kernel</b>:
+
+$$ k(x, y) = exp\left(- \frac{\vert\vert x - y \vert\vert^2}{2\tau^2 } \right)  $$
+
+Intuitively, using this kernel means that the closer $x$ and $y$ are, the more correlated $GP(x)$ and $GP(y)$ will be. $\tau$ is a hyperparameter that controls the likelihood that returned functions will be smooth, i.e., the higher the $\tau$, the higher the covarience between distant function values. You can see a concrete example of this below. I've drawn two functions pulled from a gaussian process where $m(x)$ is some constant. 
+
+<img src="4.png" alt="Mountain View" style="width:600;">
+
+</br></br></br>
+<h4>Gaussian Processes for Regression</h4>
 
 
 
