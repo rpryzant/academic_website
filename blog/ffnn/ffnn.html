@@ -162,11 +162,11 @@ w^{new}_{ij} &= w^{old}_{ij} - n \frac{\partial E_d}{\partial w_{ij}}\\
 
 </br></br>
 
-Let's try implementing this real quick. Below I've coded up a quick neural network implementation. This network takes 3-dimensional inputs and produces a single real-valued output. It has one hidden layer with 8 units. The loss function I'm using here is absolute loss, $y - \hat{y}$. 
+Let's implement this. Below is an example network that takes 3-dimensional inputs and produces a single real-valued output. It has one hidden layer with 8 units. The loss is absolute loss, $y - \hat{y}$. 
 
 <pre>
 """
-These are some quick implementations of neural networks for regression.
+Neural network for regression
 
 Training is via backprop
 
