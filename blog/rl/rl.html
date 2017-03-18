@@ -1,0 +1,185 @@
+<html>
+<head>
+<title>Reinforcement Learning</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="https://use.fontawesome.com/981e0eb420.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900%7COpen+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../static/style.css" />
+
+
+
+
+<script type="text/javascript"
+   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default">
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
+
+</head>
+<body>
+
+    <div class="blog-container">
+        <div class="row">
+            <div class="col-sm-12">
+
+
+<h2>Reinforcement Learning</h2>
+
+
+
+<h4>Intro</h4>
+
+This is a little "for dummies" overview of three RL algorithms: SARSA(lambda), Q-learning, and Policy Gradients. These descriptions assume some prior knowledge about the RL framework. I'd suggest checking out <a href="http://web.stanford.edu/class/cs221/lectures/mdp2-6pp.pdf">these lecture notes</a> for a complete intro to the topic, but these are the high points:
+</br></br>
+<ul>
+<li> The algorithm is geared towards agents operating in some environment.
+<li> Those agents can take "actions", and the environment can give reward or punishment for these actions.
+<li> The agent has no prior knowledge about the environment or its actions; it has no idea what the results of its actions will be. Completely blind.
+<li> The goal is to learn a "policy" that will prescribe rules to the agent. 
+</ul>
+
+Imagine a robot dropped into an utterly foreign land. It can wave around, but is striking into the complete unknown. Every once in a while it either gets hit or patted on the head. We want an algorithm that will teach the robot what's going on, what kind of moves it should make in order to avoid getting hit and get lots of pats. 
+
+</br></br>
+
+Note that I've implemented all of the algorithms discussed in <a href="https://github.com/rpryzant/reinforce/blob/master/src/agents.py">this file</a>.
+v
+And so, without any further adieu, let's begin Warning! Jargon incoming.
+
+
+
+</br></br></br></br>
+<h4>SARSA</h4>
+
+
+SARSA is an on-policy bootstrapping algorithm that learns a mapping between state-action pairs and the Q-values of the control/evaluation policy $\pi$. In our case, we used an $\epsilon$-greedy policy for $\pi$: with probability $\epsilon$ the action is chosen randomly, and with probability $1 - \epsilon$ the action is chosen to satisfy $a = arg\ max_a Q_\pi(s, a)$. $\epsilon$, then, provides some degree of control over the exploitation/exploration tradeoff. 
+</br></br>
+On each ($s, a, r, s', a'$) tuple, $Q_\pi(s, a)$ moves towards an estimate of the true value of being in state $s$ and taking action $a$. This value is the sum of discounted rewards the agent can expect to receive, i.e. the 1-$step\ return$ $q_t^{(1)}$. Whereas monte carlo (MC) methods take the expectation of this return over many episodes of gameplay, SARSA bootstraps on its current representation of $Q_\pi$ to obtain its estimate.
+</br></br>
+The algorithm attempts to minimize the following objective in a function approximation setting:
+
+\begin{align*}
+min_w &\sum_{(s, a, r, s', a')} \Big(Q_\pi(s, a; w) - (r + \gamma Q_\pi (s', a'; w) )\Big) \\
+&= \sum_{(s, a, r, s', a')} \Big(Q_\pi(s, a; w) - q_t^{(1)} )\Big)
+\end{align*}
+
+It does so with the following SGD update:
+
+\[ w_{t+1} = w_t - (Q_\pi(s, a) - q_t^{(1)} ) \phi(s, a) \]
+
+
+</br></br>
+<h4>SARSA(${\bf\lambda}$)</h4>
+
+Consider the following $n$-step returns at some time step $t$:
+
+\begin{align*}
+q_t^{(1)} &= r_{t+1} + \gamma Q_\pi(s_{t+1}, a_{t+1})\ \ \ \ \ \ \ \ \ \ \ \ \ \text{(SARSA)}\\
+q_t^{(2)} &= r_{t+1} + \gamma r_{t+2} + \gamma^2 Q_\pi(s_{t+2}, a_{t+2}) \\
+\cdot\cdot\cdot \\
+q_t^{(k)} &= r_{t+1} + \gamma r_{t+2} + \cdot\cdot\cdot + \gamma^{k-1} r_{t+k} + \gamma^k Q(s_{t+k}, a_{t+k})\\ 
+\cdot\cdot\cdot \\
+q_t^{(\infty)} &= r_{t+1} + \gamma r_{t+2} + \cdot\cdot\cdot + \gamma^{T-1} r_{T}\ \ \ \ \ \    \text{(MC)} \\
+\end{align*}
+
+SARSA($\lambda$) is a method of letting us combine these $n$-step returns to reach a middle ground between SARSA and MC. This provides some degree of control over the bias/variance tradeoff. To this end we define a new type of return $q^\lambda$, that averages over multiple $n$-step returns. $q^\lambda$ gives closer trajectories more weight:
+
+\[ q_t^\lambda = (1 - \lambda) \sum_{n=1}^\infty \lambda^{n-1}q_t^{(n)} \]
+
+$\lambda$ is a knob that lets us control how far-sighted the algorithm is. If $\lambda = 1$, $q^\lambda_t = q^\infty_t$, it is the MC estimate. Likewise, if $\lambda = 0$, $q^\lambda_t = q^{(1)}_t$, it is the SARSA estimate.
+</br></br>
+There is a practical problem with SARSA($\lambda$). We want to be able to do updates in real-time, and $q^\lambda$ requires that we run out entire episodes of gameplay much like MC. The solution is to make use of a backward view of the same algorithm. Each past experience is given a weight, and those weights are used for updates. This record is called an $eligibility\ trace$. More concretely, the algorithm maintains a set of eligibility traces $\tau$, one for each function approximator parameter. Each trace has a weight which determines the extent to which its parameter is eligible for credit for the current reward $r_t$. Each value of $\tau$ is updated per time step by a factor of $\lambda$. This results in an exponential decay of the impact of rewards over time (just like in the forward view of things). In our implementation, we used a $replacing\ trace$, which sets a default trace of 1, drops a trace if it falls below some threshold $\alpha$, and otherwise decays the trace by a value of $c = \gamma\lambda$:
+
+\[  \tau_t[s] = 
+\begin{cases}
+      \gamma\lambda\tau_t[s] & \text{if}\ \gamma\lambda\tau_t[s] < \alpha \land s \neq s_t\\
+    0              &  \text{if}\ \gamma\lambda\tau_t[s] \ge \alpha \land s \neq s_t \\
+    1  &  \text{if}\ s = s_t
+\end{cases}  \]
+
+When implementing, it's easier to $\gamma$ and let $\lambda$ be the sole controller of trace decay.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</br></br></br></br>
+<h4>Q-Learning</h4>
+
+Q-learning is a model-free, off-policy approach in which the estimated utility of being in a state and taking an action is updated towards a bootstrap estimate of the true return. The primary difference between Q-learning and SARSA is the former's off-policy nature. At each time step, the next action is selected using the acting policy $\pi$ (in our case, $\epsilon$-greedy). Q-values, however, are updated towards an alternative action suggested by an optimal policy. More specifically, Q-learning attempts to minimize the following objective under function approximation:
+
+\[ min_w \sum_{(s, a, r, s')} \Big( Q_{opt} (s, a; w) - (r + \gamma\ max_{a'} Q_{opt}(s', a')) ) \Big) \]
+
+It does so with the following SGD update step:
+
+\[ w_{t+1} = w_t - \Big(Q_{opt}(s, a) - (r + \gamma\ max_{a'} Q_{opt}(s', a'))    \Big)\phi(s, a)  \]
+
+
+Under this formulation, there are several problems with Q-learning:
+</br></br>
+<ul>
+<li> Q-learning is a special case of off-policy learning: both the target and behavior policies are allowed to improve over time. This injects instability into each update because we are moving Q towards a shifting target.
+<li> Gradient descent is not sample efficient. We throw away each experience tuple after a single update.
+<li> Adjacent experience tuples are highly correlated, leading to serious multicolinearity in our training data. 
+</ul>
+
+We can correct for these problems by introducing a pair of modifications to Q-learning: <i>replay memory</i> and <i>fixed Q targets</i>. A replay memory is a cache of agent experience ( $(s, a, r, s')$ tuples ) acquired by the acting policy. During learning, the algorithm samples from this experience to make its parameter updates. Our replay memory is a limited-memory system. When the memory has reached capacity, past experiences are replaced randomly. Fixed Q targets refers to the process of periodically freezing the parameters of our $Q_{opt}$ function approximator, and using this static set of weights to compute targets. These fixed targets have been shown to yield in more stable updates.
+
+</br></br></br></br>
+<h4>Policy Gradients</h4>
+
+Recall that SARSA($\lambda$) and Q-learning seek to update the action-value function $Q$ using a policy generated directly from $Q$ (i.e. $\epsilon$-greedy). Policy gradient methods, on the other hand, seek to directly parameterize the policy itself: $\pi_\theta = p(a \vert s; \theta)$. In practice, policy gradients have been shown to converge quickly. Recent work suggests these methods might be the current state-of-the-art in the 2d game-playing domain. As Karpathy said, "Q-learning is $so$ 2013".
+
+</br></br>
+The implied PG objective is the average reward per time-step:
+
+\[ J(\theta) = \sum_s d^{\pi_\theta}(s) \sum_a \pi_\theta(s, a) r_s^a \]
+
+where $r_s^a$ is the reward from being in state $s$ and taking action $a$, and $d^{\pi_\theta}(s)$ is the Laplace-smoothed asymptotic distribution of the Markov chain generated by $\pi_\theta$. <b>What this means is the following:</b> run out many games $g = 1\cdot\cdot\cdot k$ and count the number of times you were in state $s$ with $c_g(s)$; then normalize through to get probabilities; finally, smooth by layering on a count of $\lambda$ to every possible $s$:
+
+\[ d^{\pi_\theta}(s) = \lim\limits_{g \to \infty} \frac{c_g(s) + \lambda}{\sum_{s'}  c_g(s') + \lambda } \]
+
+The process of finding the gradient of the policy ( $\nabla_\theta J(\theta)$ ) and perform stochastic gradient descent is a wicked neat of research. Because of the $c_g$ terms in $d^{\pi_\theta}$, estimating $J(\theta)$ directly would require that we run out games to their end for each update, which would be computationally expensive. There are several methods for calculating looser approximations of that gradient. I'll be talking about that of likelihood ratios because it's the most conceptually simple.
+
+</br></br>
+With this method, the policy gradient is defined as
+
+\begin{align*}
+\nabla_\theta J(\theta) &= \nabla_\theta \Big( \sum_s d^{\pi_\theta}(s) \sum_a \pi_\theta(s, a) r_s^a \Big)  \\
+&\approx E_{\pi_\theta} \Big[\nabla_\theta log\ \pi_\theta(s, a) q_t(s)  \Big]
+\end{align*}
+
+Where $q_t(s)$ is an unbiased sample of the eventual return at state $s$. Computing this leads to the following high-level algorithm:
+</br></br>
+<ol>
+<li> Use $\theta$ to generate a log distribution over actions ($log$ $p(a \vert s; \theta)$\ ). In our case, we used a deep neural network.
+<li> Sample and execute an action from this distribution. Record the log probabilities, state, action, as well as any other factors (e.g. hidden unit activations) needed to backpropagate at this step.
+<li> Repeat steps 1 \& 2 until the environment expels an eventual reward $r$ (until the agent has won, lost, broken a brick, or returned a ball). 
+<li> At this point, fill in the reward received for all the $q_t(s)$'s while traversing backwards through cached history. 
+<li> When a batch's worth of eventual rewards have been slotted in, fill in gradients and backpropagate by turning counts into log probabilities.
+</ol>
+</br>
+A cursory analysis may find this algorithm flawed. An agent could make many competent actions that should be encouraged before loosing a game (thus filling in a negative gradient for that point in time, discouraging those actions). In practice, however, positive rewards succeed a net majority of adept actions so on average, competency is encouraged.
+
+</br></br></br></br>
+
+
+</body>
+</html>
+
