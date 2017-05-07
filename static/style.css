@@ -101,6 +101,11 @@ img.headshot {
     width:150px;max-width:100%;float:left
 }
 
+img.pub {
+  height: 100px; float:right;
+
+}
+
 img.seal {
     width:90px;max-width:100%;float:left
 }
