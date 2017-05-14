@@ -57,6 +57,7 @@ span.sep {
 .container {
     max-width: 970px; 
 }
+
 .blog-container {
    font-family: "monosans";
    width: 750px; 
@@ -95,15 +96,20 @@ b {
 }
 
 p {
-
 }
+
+
+
 img.headshot {
     width:150px;max-width:100%;float:left
 }
 
-img.pub {
-  height: 100px; float:right;
-
+img.pub_img {
+    min-width: 100px;
+    max-width: 100px;
+    min-height: 70px;
+    max-height: 100px;
+    margin-right: 20px;
 }
 
 img.seal {
