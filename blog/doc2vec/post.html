@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>doc2vec tutorial</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="https://use.fontawesome.com/981e0eb420.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900%7COpen+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../static/style.css" />
+
+
+
+
+<script type="text/javascript"
+   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default">
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
+
+</head>
+<body>
+
+    <div class="blog-container">
+        <div class="row">
+            <div class="col-sm-12">
+
+
+<h2>Paragraph Vectors with doc2vec and gensim</h2>
+
+<h4>Why I'm writing this</h4>
+
+<p>
+Lots of machine learning algorithms (e.g. logistic regression, PCA, k-means) require the input to be represented with a fixed-length vector. Bodies of text (calling these "paragraphs" from now on) are tricky to cram into a vector. They're of varible length, and they consist of words, which are discrete units. 
+</p>
+<p>
+Fortunately, there's a very clever algorithm that can learn fixed-sized vector representations of paragraphs. It's called <i>doc2vec</i>. Even better, there's a handy, speedy package that implements it for you: <a href="https://radimrehurek.com/gensim/models/doc2vec.html">gensim</a>! Unfortunately, <a href="https://medium.com/@klintcho/doc2vec-tutorial-using-gensim-ab3ac03d3a1">every</a> <a href="http://linanqiu.github.io/2015/10/07/word2vec-sentiment/">single</a> <a href="https://rare-technologies.com/doc2vec-tutorial/">tutorial</a> I could find is <i>broken</i> (except for <a href="https://github.com/RaRe-Technologies/gensim/blob/develop/docs/notebooks/doc2vec-IMDB.ipynb">this</a> somewhat opaque ipython notebook). They don't work with the latest versions of gensim. So I thought I'd write up a little tutorial of my own. Enjoy. 
+</p>
+</br>
+<h4>doc2vec algorithm</h4>
+brief description of algo
+
+</br>
+<h4>data wrangling</h4>
+how to set up data
+
+</br>
+<h4>learning your vectors</h4>
+training models, saving models, loading models
+
+</br>
+<h4>getting your vectors</h4>
+obtaining vectors
+
+</br>
+<h4>advanced: transfer learning</h4>
+pre-initialization
+
+
+
