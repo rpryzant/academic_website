@@ -99,7 +99,6 @@ p {
 }
 
 
-
 img.headshot {
     width:150px;max-width:100%;float:left
 }
@@ -107,19 +106,16 @@ img.headshot {
 a.pub_img {
     margin-top: auto;
     margin-bottom: auto;
-    min-width: 100px; !important;
-    max-width: 100px; !important;
-    min-height: 70px; !important;
-    max-height: 100px; !important;
+    min-width: 80px; !important;
+    max-width: 80px; !important;
+    min-height: 80px; !important;
+    max-height: 80px; !important;
     margin-right: 20px; !important;
 }
 
 img.pub_img {
-    min-width: 100px; !important;
-    max-width: 100px; !important;
-    min-height: 70px; !important;
-    max-height: 100px; !important;
-    margin-right: 20px; !important;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 
