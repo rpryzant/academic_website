@@ -6,11 +6,12 @@ h1 {
     font-weight: 550;
     position: relative;
     text-align: center;
+    top: -12px;
 }
 h1 small {
     font-size: 14px;
     float: right;
-    padding-top: 15px;
+    padding-top: 11px;
     line-height: 1.8em; 
 }
 h2 {
