@@ -106,7 +106,9 @@ p {
 img.headshot {
     width:120px;
     max-width:100%;
-    float:left
+    float:left;
+    margin-left:20px;
+    /*padding-left: 100px;*/
 }
 
 a.pub_img {
@@ -116,7 +118,7 @@ a.pub_img {
     max-width: 80px; !important;
     min-height: 80px; !important;
     max-height: 80px; !important;
-    margin-right: 20px; !important;
+    margin-right: 40px; !important;
 }
 
 img.pub_img {
@@ -127,7 +129,12 @@ img.pub_img {
 
 
 img.seal {
-    width:90px;max-width:100%;float:left
+    /*width:90px;max-width:100%;float:left*/
+    width:90px;
+    max-width:100%;
+    float:left;
+    margin-left:40px;
+
 }
 
 
