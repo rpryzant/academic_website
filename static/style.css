@@ -1,8 +1,7 @@
 body { 
     font-family: "Open Sans";
     position: relative;
-    left: -13px;
-
+    font-size: 20px;
 }
 h1 { 
     font-family: Lato;
@@ -12,13 +11,13 @@ h1 {
     top: -12px;
 }
 h1 small {
-    font-size: 14px;
+    /*font-size: 14px;*/
     float: right;
     padding-top: 11px;
     line-height: 1.8em; 
 }
 h2 {
-   font-size: 36px;
+   /*font-size: 66px;*/
    padding-top: 50px;
    padding-bottom: 25px;
    text-align: center;
@@ -43,12 +42,12 @@ h4 small {
     padding-top: 10px;
     font-family: Lato;
     font-weight: 300; 
-    padding-left: 10px;
+    padding-left: -10px;
 
 }
 h5 {
-    font-size: 24px;
-    padding-left: 130px;
+    font-size: 34px;
+    padding-left: 120px;
     font-family: Lato;
     font-weight: 300;
 }
@@ -59,17 +58,7 @@ span.sep {
     padding: 0 3px; 
 }
 .container {
-    max-width: 970px; 
-}
-
-.blog-container {
-   font-family: "monosans";
-   width: 750px; 
-   margin: 0 auto;
-   font-size: 18px;
-   text-align: justify;
-   font-weight: 75;
-   display: block;
+    max-width: 9170px; 
 }
 
 img {
@@ -93,14 +82,6 @@ b {
     font-weight: 300; 
     font-size: 12px; 
 }
-@media (min-width: 768px) { 
-    .container { 
-        margin-top: 50px; 
-    } 
-}
-
-p {
-}
 
 
 img.headshot {
@@ -114,10 +95,10 @@ img.headshot {
 a.pub_img {
     margin-top: auto;
     margin-bottom: auto;
-    min-width: 80px; !important;
-    max-width: 80px; !important;
-    min-height: 80px; !important;
-    max-height: 80px; !important;
+    min-width: 90px; !important;
+    max-width: 90px; !important;
+    min-height: 90px; !important;
+    max-height: 90px; !important;
     margin-right: 40px; !important;
 }
 
