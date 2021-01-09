@@ -1,7 +1,7 @@
 body { 
     font-family: "Open Sans";
     position: relative;
-    font-size: 20px;
+    font-size: 17px;
 }
 h1 { 
     font-family: Lato;
@@ -11,9 +11,9 @@ h1 {
     top: -12px;
 }
 h1 small {
-    /*font-size: 14px;*/
+    font-size: 24px;
     float: right;
-    padding-top: 11px;
+    /*padding-top: 11px;*/
     line-height: 1.8em; 
 }
 h2 {
@@ -46,7 +46,7 @@ h4 small {
 
 }
 h5 {
-    font-size: 34px;
+    font-size: 30px;
     padding-left: 120px;
     font-family: Lato;
     font-weight: 300;
@@ -80,7 +80,7 @@ b {
     color: #999; 
     font-family: Lato; 
     font-weight: 300; 
-    font-size: 12px; 
+    font-size: 15px; 
 }
 
 
